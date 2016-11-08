@@ -13,10 +13,15 @@ module.exports = {
     http: {
       port: process.env.PORT || 8080,
     },
-    https: {
-      port: process.env.PORT_SECURE || 8443,
-      key: null,  // TODO
-      cert: null, // TODO
-    },
+  },
+  rabbitmq: {
+    queue: 'image-process-q',
+    heartbeat: 60,
+    prefetch: 1,
+  },
+  image: {
+    exts: ['jpeg', 'png', 'webp'],
+    thumbnail: 64,
+    medium: 400, // Adapt to iPhone 6/6plus
   }
 };

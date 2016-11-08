@@ -1,0 +1,10 @@
+# This is the Docker ignore list when
+# configuring our Node image
+
+# Generated dependencies
+*/node_modules
+*/bower_components
+
+# Documentations
+*.md
+!README.md
