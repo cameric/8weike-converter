@@ -1,0 +1,5 @@
+# Flyway.conf for the production environment
+
+flyway.url=jdbc:mysql://<RDS_DB_PROD_HOST>:<RDS_DB_PROD_PORT>/<RDS_DB_PROD_NAME>
+flyway.user=<RDS_DB_PROD_USER>
+flyway.password=<RDS_DB_PROD_PASSWORD>
