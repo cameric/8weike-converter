@@ -1,2 +1,2 @@
-# 8weike-server
-The backend server and front-end webapp for 8weike
+# 8weike-converter
+The image converter microservice for image processing and compression
