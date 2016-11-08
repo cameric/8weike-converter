@@ -4,7 +4,10 @@
   "description": "This is the image process microservice for 8weike web server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "if [ \"$NODE_ENV\" = \"production\" ]; then npm run start:prod; else npm run start:dev; fi",
+    "start:dev": "nodemon server",
+    "start:prod": "node server",
+    "test": "mocha --require --recursive"
   },
   "repository": {
     "type": "git",
@@ -22,7 +25,7 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "lodash": "^4.16.6",
-    "sharp": "^0.16.2",
-    "webpack": "^1.13.3"
+    "nodemon": "^1.11.0",
+    "sharp": "^0.16.2"
   }
 }

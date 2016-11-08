@@ -4,87 +4,28 @@
     "bucket": "8weike-core",
     "key": "dockercfg"
   },
-  "volumes": [
-    {
-      "name": "flyway-db-conf",
-      "host": {
-        "sourcePath": "/var/app/current/ci/flyway.prod.conf"
-      }
-    },
-    {
-      "name": "flyway-db-schema",
-      "host": {
-        "sourcePath": "/var/app/current/db/schema"
-      }
-    }
-  ],
   "containerDefinitions": [
     {
-      "name": "nSERVER",
-      "image": "cameric8weike/8weike-server-prod:<TAG>",
+      "name": "cSERVER",
+      "image": "cameric8weike/8weike-converter-prod:<TAG>",
       "essential": true,
       "memory": 256,
-      "links": [
-        "redis"
-      ],
       "environment": [
         {
           "name": "NODE_ENV",
           "value": "production"
-        },
-        {
-          "name": "MYSQL_RDS_DB_PROD_NAME",
-          "value": "<RDS_DB_PROD_NAME>"
-        },
-        {
-          "name": "MYSQL_RDS_DB_PROD_HOST",
-          "value": "<RDS_DB_PROD_HOST>"
-        },
-        {
-          "name": "MYSQL_RDS_DB_PROD_PASSWORD",
-          "value": "<RDS_DB_PROD_PASSWORD>"
-        },
-        {
-          "name": "MYSQL_RDS_DB_PROD_PORT",
-          "value": <RDS_DB_PROD_PORT>
-        },
-        {
-          "name": "MYSQL_RDS_DB_PROD_USER",
-          "value": "<RDS_DB_PROD_USER>"
         }
       ],
       "portMappings": [
         {
           "hostPort": 80,
-          "containerPort": 8080
+          "containerPort": 5000
         }
       ],
       "mountPoints": [
         {
           "sourceVolume": "awseb-logs-nSERVER",
           "containerPath": "/srv/nSERVER/log"
-        }
-      ]
-    },
-    {
-      "name": "redis",
-      "image": "redis:latest",
-      "essential": true,
-      "memory": 512
-    },
-    {
-      "name": "flyway-worker",
-      "image": "sxmichaels/flyway:latest",
-      "essential": false,
-      "memory": 128,
-      "mountPoints": [
-        {
-          "sourceVolume": "flyway-db-conf",
-          "containerPath": "/flyway/flyway.conf"
-        },
-        {
-          "sourceVolume": "flyway-db-schema",
-          "containerPath": "/flyway/sql"
         }
       ]
     }

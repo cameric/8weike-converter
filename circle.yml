@@ -7,8 +7,6 @@ machine:
     version: 6.3.0
   services:
     - docker
-    - mysql
-    - redis
   environment:
     NODE_ENV: test
 
@@ -16,27 +14,22 @@ dependencies:
   pre:
     - pip install awscli
   override:
-    - cd server && npm install && npm run build
-    - sudo service redis-server status || sudo service redis-server start
+    - cd server && npm install
   post:
     - docker info
-    - docker build -t cameric8weike/8weike-server-prod:$CIRCLE_SHA1 .
+    - docker build -t cameric8weike/8weike-converter-prod:$CIRCLE_SHA1 .
   cache_directories:
     - /home/ubuntu/nvm/versions/node/5.5.0/bin
     - /home/ubuntu/nvm/versions/node/5.5.0/lib/node_modules
 
-database:
-  override:
-    - docker run --rm --net=host -v $(pwd)/db/schema:/flyway/sql -v $(pwd)/ci/flyway.test.conf:/flyway/flyway.conf sxmichaels/flyway -X migrate
-
 test:
   override:
-    - docker run --rm --net=host -e NODE_ENV=test cameric8weike/8weike-server-prod:$CIRCLE_SHA1 npm run test
+    - docker run --rm --net=host -e NODE_ENV=test cameric8weike/8weike-converter-prod:$CIRCLE_SHA1 npm run test
   post:
-    - docker run -d -p 8080:8080 --name nSERVER --net=host -e NODE_ENV=test cameric8weike/8weike-server-prod:$CIRCLE_SHA1; sleep 10
-    - docker logs nSERVER
+    - docker run -d -p 8080:8080 --name cSERVER --net=host -e NODE_ENV=test cameric8weike/8weike-converter-prod:$CIRCLE_SHA1; sleep 10
+    - docker logs cSERVER
     - curl --retry 10 --retry-delay 5 -v http://localhost:8080
-    - docker stop nSERVER
+    - docker stop cSERVER
 
 deployment:
   elasticbeanstalk:

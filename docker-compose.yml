@@ -2,46 +2,11 @@ version: '2'
 
 services:
   server:
-    container_name: nSERVER
+    container_name: converter
     build: .
-    image: cameric/8weike-server:v1
-    depends_on:
-      - database
-      - redis
+    image: cameric/8weike-converter:v1
     ports:
-      - 3000:8080
-      - 8888:8888
+      - 5000:8080
     volumes:
-      - ./server:/srv/nSERVER
-      - /srv/nSERVER/node_modules
-    links:
-      - database
-      - redis
-
-  database:
-    container_name: 8weike-db-dev
-    image: mysql:latest
-    environment:
-      - MYSQL_ROOT_PASSWORD=8weike-db-dev-MySQL-SECRET
-      - MYSQL_DATABASE=8weike_db_dev
-      - MYSQL_USER=dbdevmaster
-      - MYSQL_PASSWORD=dbdevmaster
-    ports:
-      - 3306:3306
-    volumes:
-      - ./db/mysql-data:/var/lib/mysql
-
-  redis:
-    container_name: 8weike-session-store
-    image: redis:latest
-    ports:
-      - 6379:6379
-
-  flyway:
-    container_name: 8weike-flyway-dev
-    image: sxmichaels/flyway:latest
-    depends_on:
-      - database
-    volumes:
-      - ./db/schema:/flyway/sql
-      - ./flyway.dev.conf:/flyway/flyway.conf
+      - ./server:/srv/cSERVER
+      - /srv/cSERVER/node_modules

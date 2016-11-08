@@ -10,4 +10,8 @@ app.use(express.static(path.join(config.root, '/public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get('/', (req, res) => {
+  res.status(200).send('Converter service running...');
+});
+
 module.exports = app;
