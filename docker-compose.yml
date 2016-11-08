@@ -2,7 +2,7 @@ version: '2'
 
 services:
   server:
-    container_name: converter
+    container_name: cSERVER
     build: .
     image: cameric/8weike-converter:v1
     ports:
