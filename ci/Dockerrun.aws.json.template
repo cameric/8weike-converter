@@ -1,9 +1,5 @@
 {
   "AWSEBDockerrunVersion": "2",
-  "authentication": {
-    "bucket": "8weike-converter-core",
-    "key": "dockercfg"
-  },
   "containerDefinitions": [
     {
       "name": "cSERVER",
