@@ -20,7 +20,7 @@ module.exports = {
     prefetch: 1,
   },
   image: {
-    exts: ['jpeg', 'png', 'webp'],
+    exts: ['.jpg', '.jpeg', '.png', '.webp'],
     thumbnail: 64,
     medium: 400, // Adapt to iPhone 6/6plus
   }

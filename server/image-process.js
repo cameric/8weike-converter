@@ -30,7 +30,7 @@ function processMedia(task) {
   const Bucket = '8weike-media';
   const saveMedia = (buffer, info, suffix) => {
     // TODO: Use Dropbox Lepton library to optimize jpeg image size
-    const processedMediaName = `${mediaKey.name}.${suffix}.${mediaKey.ext}`;
+    const processedMediaName = `${mediaKey.name}.${suffix}${mediaKey.ext}`;
     // Join folder with the new name
     const processedMediaKey = path.join(mediaKey.dir, processedMediaName);
     return upload.uploadToS3(Bucket, processedMediaKey, buffer);
@@ -56,7 +56,8 @@ function processMedia(task) {
             .toBuffer()
             .then((buffer, info) => saveMedia(buffer, info, 'thumbnail'));
 
-        return Promise.all([mediumPromise, thumbnailPromise]);
+        return Promise.all([mediumPromise, thumbnailPromise])
+            .then(() => Promise.resolve('Image has been processed!'));
       });
     })
 }

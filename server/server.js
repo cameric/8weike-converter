@@ -9,8 +9,7 @@ const imageProcesser = require('./image-process');
 const mq = require('./mq');
 
 if (cluster.isMaster) {
-  //const numWorkers = require('os').cpus().length;
-  const numWorkers = 1;
+  const numWorkers = require('os').cpus().length;
 
   if (process.env.NODE_ENV === 'development') {
     console.log('Master cluster setting up ' + numWorkers + ' workers...');
@@ -36,13 +35,5 @@ if (cluster.isMaster) {
 
 } else {
   // Establish a consumer channel and start consuming
-  mq.establishConsumer(config.rabbitmq.queue, imageProcesser.processMedia)
-      .then((ok) => {
-        if (process.env.NODE_ENV === 'development') {
-          console.log(`Consumer established successfully!`);
-        }
-      })
-      .error((err) => {
-        console.warn(`Error occurred when starting consumer: ${err}`);
-      })
+  mq.establishConsumer(config.rabbitmq.queue, imageProcesser.processMedia);
 }
