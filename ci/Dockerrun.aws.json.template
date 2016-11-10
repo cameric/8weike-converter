@@ -24,8 +24,8 @@
       ],
       "mountPoints": [
         {
-          "sourceVolume": "awseb-logs-nSERVER",
-          "containerPath": "/srv/nSERVER/log"
+          "sourceVolume": "awseb-logs-cSERVER",
+          "containerPath": "/srv/cSERVER/log"
         }
       ]
     }
