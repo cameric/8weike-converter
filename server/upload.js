@@ -14,14 +14,14 @@ function removeTemporary(location, tmpFilename) {
 
 function uploadToS3(Bucket, Key, Body) {
   // Only upload file to S3 in production environment
-  if (process.env.NODE_ENV !== 'production') {
-    console.log(`File: ${Key} sent to S3...`);
-    const fakeResponse = {
-      Key,
-      Location: `https://8weike-media.s3.amazonaws.com/${Key}`,
-    };
-    return Promise.resolve(fakeResponse);
-  }
+  //if (process.env.NODE_ENV !== 'production') {
+  //  console.log(`File: ${Key} sent to S3...`);
+  //  const fakeResponse = {
+  //    Key,
+  //    Location: `https://8weike-media.s3.amazonaws.com/${Key}`,
+  //  };
+  //  return Promise.resolve(fakeResponse);
+  //}
 
   // Configure AWS
   AWS.config.update({ region: 'us-east-1' });

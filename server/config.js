@@ -7,6 +7,7 @@ const root = path.join(__dirname, '/../../');
 
 module.exports = {
   root,
+  nserver: 'https://oav0gkqdmk.execute-api.us-east-1.amazonaws.com/prod',
   express: {
     // NOTE: Many public networks (e.g. hotel wifi) block HTTP/HTTPS on nonstandard ports.
     // For production, PORT and PORT_SECURE should always be 80 and 443, respectively.

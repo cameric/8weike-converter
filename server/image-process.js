@@ -4,6 +4,7 @@ const _ = require('lodash');
 const AWS = require('aws-sdk');
 const path = require('path');
 const Promise = require('bluebird');
+const rp = require('request-promise');
 const sharp = require('sharp');
 
 const config = require('./config');
@@ -18,7 +19,32 @@ function retrieveMedia(Bucket, Key) {
   return s3.getObject({ Bucket, Key }).promise();
 }
 
+function saveMediaMeta(mediaId, records) {
+  const [mediumRecord, thumbnailRecord] = records;
+  const options = {
+    method: 'PUT',
+    uri: path.join(config.nserver, `/medias/${mediaId}`),
+    body: {
+      medium_name: mediumRecord.Key,
+      medium_location: mediumRecord.Location,
+      thumbnail_name: thumbnailRecord.Key,
+      thumbnail_location: thumbnailRecord.Location,
+    },
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    json: true,
+  };
+
+  return rp(options);
+}
+
 function processMedia(task) {
+  if (process.env.NODE_ENV !== 'production') {
+    // Just ack the message if not in prod
+    return Promise.resolve('Image has been processed!');
+  }
+
   const mediaResource = JSON.parse(task.content.toString());
 
   // Skip video files for now (just for simplicity sake)
@@ -57,6 +83,7 @@ function processMedia(task) {
             .then((buffer, info) => saveMedia(buffer, info, 'thumbnail'));
 
         return Promise.all([mediumPromise, thumbnailPromise])
+            .then((s3Records) => saveMediaMeta(mediaResource.id, s3Records))
             .then(() => Promise.resolve('Image has been processed!'));
       });
     })
