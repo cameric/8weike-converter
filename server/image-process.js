@@ -23,7 +23,7 @@ function saveMediaMeta(mediaId, records) {
   const [mediumRecord, thumbnailRecord] = records;
   const options = {
     method: 'PUT',
-    uri: path.join(config.nserver, `/medias/${mediaId}`),
+    uri: `${config.nserver}/medias/${mediaId}`,
     body: {
       medium_name: mediumRecord.Key,
       medium_location: mediumRecord.Location,
