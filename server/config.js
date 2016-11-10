@@ -22,6 +22,7 @@ module.exports = {
   },
   image: {
     exts: ['.jpg', '.jpeg', '.png', '.webp'],
+    quality: 90,
     thumbnail: 64,
     medium: 400, // Adapt to iPhone 6/6plus
   }

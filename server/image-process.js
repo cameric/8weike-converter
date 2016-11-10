@@ -71,6 +71,8 @@ function processMedia(task) {
         const mediumPromise = mediaData.clone()
             .resize(null, config.image.medium)
             .withoutEnlargement()
+            .sharpen()
+            .quality(config.image.quality)
             .toFormat(metadata.format)
             .toBuffer()
             .then((buffer, info) => saveMedia(buffer, info, 'medium'));
